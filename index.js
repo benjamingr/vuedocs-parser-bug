@@ -5,9 +5,12 @@ const options = {
   filename: 'fixtures/UiAutocompleteMinimal.vue'
 }
 
-vuedoc.parse(options)
+const errorBoundary = require('domain').create();
+
+errorBoundary.on('error', (err) => {
+  console.error('got an error');
+  console.error(err);
+}).run(() => {
+  vuedoc.parse(options)
   .then((component) => console.log(component))
-  .catch((err) => {
-    console.error('got an error')
-    console.error(err)
-  })
+});
